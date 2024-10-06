@@ -1,17 +1,9 @@
 # CogvideoX Controlnet Extention
 
-<table width="800" class="center">
-    <tr>
-        <td>
-            <video src="resources/stacked_ship.mp4" width="100%" controls autoplay loop></video>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <video src="resources/stacked_car.mp4" width="100%" controls autoplay loop></video>
-        </td>
-    </tr>
-</table>  
+
+https://github.com/user-attachments/assets/34a3a015-bfd3-4f75-a6ba-e8be524916e2
+
+https://github.com/user-attachments/assets/596ca9ce-198c-476c-8ace-077c2a534ae4
 
 This repo contains the code for simple Controlnet module for CogvideoX model.  
 Supported models for 2B:
