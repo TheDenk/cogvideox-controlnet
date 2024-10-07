@@ -7,8 +7,8 @@ https://github.com/user-attachments/assets/596ca9ce-198c-476c-8ace-077c2a534ae4
 
 This repo contains the code for simple Controlnet module for CogvideoX model.  
 Supported models for 2B:
-- Canny (<a href="https://huggingface.co/TheDenk/cogvideox-2b-controlnet-hed-v1">HF Model Link</a>) 
-- Hed (<a href="https://huggingface.co/TheDenk/cogvideox-2b-controlnet-canny-v1">HF Model Link</a>) 
+- Canny (<a href="https://huggingface.co/TheDenk/cogvideox-2b-controlnet-canny-v1">HF Model Link</a>) 
+- Hed (<a href="https://huggingface.co/TheDenk/cogvideox-2b-controlnet-hed-v1">HF Model Link</a>) 
 
 ### How to
 Clone repo 
