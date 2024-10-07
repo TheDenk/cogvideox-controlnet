@@ -25,7 +25,7 @@ from diffusers import (
     AutoencoderKLCogVideoX
 )
 from diffusers.utils import export_to_video, load_video
-from controlnet_aux import HEDdetector
+from controlnet_aux import HEDdetector, CannyDetector
 
 from controlnet_pipeline import ControlnetCogVideoXPipeline
 from cogvideo_transformer import CustomCogVideoXTransformer3DModel
@@ -40,6 +40,7 @@ def init_controlnet_processor(controlnet_type):
 
 controlnet_mapping = {
     'hed': HEDdetector,
+    'canny': CannyDetector,
 }
 
 

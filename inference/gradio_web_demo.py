@@ -25,7 +25,7 @@ from diffusers import (
 )
 from datetime import datetime, timedelta
 import moviepy.editor as mp
-from controlnet_aux import HEDdetector
+from controlnet_aux import HEDdetector, CannyDetector
 
 from controlnet_pipeline import ControlnetCogVideoXPipeline
 from cogvideo_transformer import CustomCogVideoXTransformer3DModel
@@ -37,6 +37,7 @@ os.makedirs("./gradio_tmp", exist_ok=True)
 
 controlnet_mapping = {
     'hed': HEDdetector,
+    'canny': CannyDetector,
 }
 
 
