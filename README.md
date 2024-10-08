@@ -28,7 +28,7 @@ Install requirements
 pip install -r requirements.txt
 ```
   
-### Inference examples
+### Simple examples
 #### Inference with cli
 ```bash
 python -m inference.cli_demo \
@@ -46,7 +46,24 @@ python -m inference.gradio_web_demo \
     --base_model_path THUDM/CogVideoX-2b \
     --controlnet_model_path TheDenk/cogvideox-2b-controlnet-canny-v1
 ```
-  
+
+### Detailed inference
+```bash
+python -m inference.cli_demo \
+    --video_path "resources/car.mp4" \
+    --prompt "car is moving on waves in the ocean" \
+    --controlnet_type "canny" \
+    --base_model_path THUDM/CogVideoX-2b \
+    --controlnet_model_path TheDenk/cogvideox-2b-controlnet-canny-v1 \
+    --num_inference_steps 50 \
+    --guidance_scale 6.0 \
+    --controlnet_weights 0.5 \
+    --controlnet_guidance_start 0.0 \
+    --controlnet_guidance_end 0.5 \
+    --output_path "./output.mp4" \
+    --seed 42
+```
+
   
 ## Acknowledgements
 Original code and models [CogVideoX](https://github.com/THUDM/CogVideo/tree/main).  

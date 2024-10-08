@@ -178,9 +178,9 @@ if __name__ == "__main__":
         "--controlnet_model_path", type=str, default="TheDenk/cogvideo-2b-controlnet-hed", help="The path of the controlnet pre-trained model to be used"
     )
     parser.add_argument("--controlnet_type", type=str, default='hed', help="Type of controlnet model (e.g. canny, hed)")
-    parser.add_argument("--controlnet_weights", type=float, default=1.0, help="Strenght of controlnet")
+    parser.add_argument("--controlnet_weights", type=float, default=0.5, help="Strenght of controlnet")
     parser.add_argument("--controlnet_guidance_start", type=float, default=0.0, help="The stage when the controlnet starts to be applied")
-    parser.add_argument("--controlnet_guidance_end", type=float, default=1.0, help="The stage when the controlnet end to be applied")
+    parser.add_argument("--controlnet_guidance_end", type=float, default=0.5, help="The stage when the controlnet end to be applied")
     parser.add_argument("--lora_path", type=str, default=None, help="The path of the LoRA weights to be used")
     parser.add_argument("--lora_rank", type=int, default=128, help="The rank of the LoRA weights")
     parser.add_argument(
