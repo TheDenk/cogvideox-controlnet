@@ -64,7 +64,26 @@ python -m inference.cli_demo \
     --seed 42
 ```
 
-  
+## Training
+The 2B model requires 48 GB VRAM (For example A6000) and 80 GB for 5B. But it depends on the number of transformer blocks which default is 8 (`controlnet_transformer_num_layers` parameter in the config).
+
+#### Dataset
+<a href="https://huggingface.co/datasets/nkp37/OpenVid-1M">OpenVid-1M</a> dataset was taken as the base variant. CSV files for the dataset you can find <a href="https://huggingface.co/datasets/nkp37/OpenVid-1M/tree/main/data/train">here</a>.
+
+#### Train script
+For start training you need fill the config files `accelerate_config_machine_single.yaml` and `finetune_single_rank.sh`.  
+In `accelerate_config_machine_single.yaml` set parameter`num_processes: 1` to your GPU count.  
+In `finetune_single_rank.sh`:  
+1. Set `MODEL_PATH for` base CogVideoX model. Default is THUDM/CogVideoX-2b.  
+2. Set `CUDA_VISIBLE_DEVICES` (Default is 0).  
+3. (For OpenVid dataset) Set `video_root_dir` to directory with video files and `csv_path`.  
+
+Run taining
+```
+cd training
+bash finetune_single_rank.sh
+```
+
 ## Acknowledgements
 Original code and models [CogVideoX](https://github.com/THUDM/CogVideo/tree/main).  
 

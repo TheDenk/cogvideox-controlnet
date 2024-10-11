@@ -41,16 +41,6 @@ class CustomCogVideoXTransformer3DModel(CogVideoXTransformer3DModel):
         encoder_hidden_states = hidden_states[:, :text_seq_length]
         hidden_states = hidden_states[:, text_seq_length:]
 
-        # 2.1 Controlnet states
-        # if controlnet_states is not None:
-            # mean_latents, std_latents = torch.mean(hidden_states, dim=(1, 2), keepdim=True), torch.std(hidden_states, dim=(1, 2), keepdim=True)
-            # mean_control, std_control = torch.mean(controlnet_states, dim=(1, 2), keepdim=True), torch.std(controlnet_states, dim=(1, 2), keepdim=True)
-            # controlnet_states = (controlnet_states - mean_control) * (std_latents / (std_control + 1e-5)) + mean_latents
-            # hidden_states = hidden_states + controlnet_states
-
-        # if controlnet_states is not None:
-        #     controlnet_start_index = len(self.transformer_blocks) - len(controlnet_states)
-            
         # 3. Transformer blocks
         for i, block in enumerate(self.transformer_blocks):
             if self.training and self.gradient_checkpointing:
@@ -77,12 +67,7 @@ class CustomCogVideoXTransformer3DModel(CogVideoXTransformer3DModel):
                     temb=emb,
                     image_rotary_emb=image_rotary_emb,
                 )
-                
-            # if (controlnet_states is not None) and (i >= controlnet_start_index):
-            #     controlnet_states_block = controlnet_states[i - controlnet_start_index]
-                # mean_latents, std_latents = torch.mean(hidden_states, dim=(1, 2), keepdim=True), torch.std(hidden_states, dim=(1, 2), keepdim=True)
-                # mean_control, std_control = torch.mean(controlnet_states_block, dim=(1, 2), keepdim=True), torch.std(controlnet_states_block, dim=(1, 2), keepdim=True)
-                # controlnet_states_block = (controlnet_states_block - mean_control) * (std_latents / (std_control + 1e-5)) + mean_latents
+
             if (controlnet_states is not None) and (i < len(controlnet_states)):
                 controlnet_states_block = controlnet_states[i]
                 controlnet_block_weight = 1.0
