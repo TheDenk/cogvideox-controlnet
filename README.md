@@ -57,9 +57,9 @@ python -m inference.cli_demo \
     --controlnet_model_path TheDenk/cogvideox-2b-controlnet-canny-v1 \
     --num_inference_steps 50 \
     --guidance_scale 6.0 \
-    --controlnet_weights 0.5 \
+    --controlnet_weights 0.8 \
     --controlnet_guidance_start 0.0 \
-    --controlnet_guidance_end 0.5 \
+    --controlnet_guidance_end 0.8 \
     --output_path "./output.mp4" \
     --seed 42
 ```

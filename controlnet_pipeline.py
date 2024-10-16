@@ -10,6 +10,7 @@ from einops import rearrange, repeat
 from transformers import T5EncoderModel, T5Tokenizer
 from diffusers.video_processor import VideoProcessor
 from diffusers.utils.torch_utils import randn_tensor
+from diffusers.models.embeddings import get_3d_rotary_pos_embed
 from diffusers.pipelines.pipeline_utils import DiffusionPipeline
 from diffusers.models import AutoencoderKLCogVideoX, CogVideoXTransformer3DModel
 from diffusers import CogVideoXDDIMScheduler, CogVideoXDPMScheduler
@@ -552,6 +553,21 @@ class ControlnetCogVideoXPipeline(DiffusionPipeline, CogVideoXLoraLoaderMixin):
 
         # 6. Encode controlnet frames
         if controlnet_latents is None:
+            duplicate_frames_count = num_frames - len(controlnet_frames)
+            if duplicate_frames_count > 0:
+                # Simple duplicate first frame
+                # controlnet_frames = [controlnet_frames[0]] * duplicate_frames_count + controlnet_frames
+                # Or reversed duplicate frames ?
+                reversed_controlnet_frames = list(reversed(controlnet_frames))
+                controlnet_sum_frames = controlnet_frames + reversed_controlnet_frames
+                reversed_chunks_count = num_frames // len(controlnet_sum_frames)
+                controlnet_frames = [*controlnet_sum_frames]
+                for _ in range(reversed_chunks_count):
+                    controlnet_frames += controlnet_sum_frames
+
+            # If controlnet frames count greater than num_frames parameter
+            controlnet_frames = controlnet_frames[:num_frames]
+            
             controlnet_latents = self.prepare_controlnet_frames(
                 controlnet_frames,
                 height, 
