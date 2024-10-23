@@ -1,9 +1,6 @@
 # CogvideoX Controlnet Extention
 
-
-https://github.com/user-attachments/assets/34a3a015-bfd3-4f75-a6ba-e8be524916e2
-
-https://github.com/user-attachments/assets/596ca9ce-198c-476c-8ace-077c2a534ae4
+https://github.com/user-attachments/assets/d3cd3cc4-de95-453f-bbf7-ccbe1711fc3c
 
 This repo contains the code for simple Controlnet module for CogvideoX model.  
 
