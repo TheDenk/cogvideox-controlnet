@@ -1,14 +1,3 @@
-"""
-THis is the main file for the gradio web demo. It uses the CogVideoX-2B model to generate videos gradio web demo.
-set environment variable OPENAI_API_KEY to use the OpenAI API to enhance the prompt.
-
-This demo only supports the text-to-video generation model.
-If you wish to use the image-to-video or video-to-video generation models,
-please use the gradio_composite_demo to implement the full GUI functionality.
-
-Usage:
-    OpenAI_API_KEY=your_openai_api_key OpenAI_BASE_URL=https://api.openai.com/v1 python inference/gradio_web_demo.py
-"""
 import argparse
 import os
 import threading
@@ -118,8 +107,8 @@ def main(args):
         pipe.load_lora_weights(args.lora_path, weight_name="pytorch_lora_weights.safetensors", adapter_name="test_1")
         pipe.fuse_lora(lora_scale=1 / args.lora_rank)
 
-    pipe.scheduler = CogVideoXDDIMScheduler.from_config(pipe.scheduler.config, timestep_spacing="trailing")
-    # pipe.scheduler = CogVideoXDPMScheduler.from_config(pipe.scheduler.config, timestep_spacing="trailing")
+    # pipe.scheduler = CogVideoXDDIMScheduler.from_config(pipe.scheduler.config, timestep_spacing="trailing")
+    pipe.scheduler = CogVideoXDPMScheduler.from_config(pipe.scheduler.config, timestep_spacing="trailing")
 
     dtype = torch.float16 if args.dtype == "float16" else torch.bfloat16
     # pipe.to("cuda")
@@ -199,16 +188,16 @@ def main(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generate a video from a text prompt using CogVideoX")
     parser.add_argument(
-        "--base_model_path", type=str, default="THUDM/CogVideoX-2b", help="The path of the pre-trained model to be used"
+        "--base_model_path", type=str, default="THUDM/CogVideoX-5b", help="The path of the pre-trained model to be used"
     )
     parser.add_argument(
-        "--controlnet_model_path", type=str, default="TheDenk/cogvideo-2b-controlnet-hed", help="The path of the controlnet pre-trained model to be used"
+        "--controlnet_model_path", type=str, default="TheDenk/cogvideox-5b-controlnet-hed-v1", help="The path of the controlnet pre-trained model to be used"
     )
     parser.add_argument("--controlnet_type", type=str, default='hed', help="Type of controlnet model (e.g. canny, hed)")
     parser.add_argument("--lora_path", type=str, default=None, help="The path of the LoRA weights to be used")
     parser.add_argument("--lora_rank", type=int, default=128, help="The rank of the LoRA weights")
     parser.add_argument(
-        "--dtype", type=str, default="float16", help="The data type for computation (e.g., 'float16' or 'bfloat16')"
+        "--dtype", type=str, default="bfloat16", help="The data type for computation (e.g., 'float16' or 'bfloat16')"
     )
     args = parser.parse_args()
     main(args)

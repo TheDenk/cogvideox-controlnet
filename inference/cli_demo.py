@@ -5,10 +5,10 @@ To run the script, use the following command with appropriate arguments:
 ```bash
 $ python inference/cli_demo.py \
 --video_path "test_video/car.mp4" \
---prompt "car is moving among mountains" \
+--prompt "the car is driving on a mountain road" \
 --controlnet_type "hed" \
 --model_path THUDM/CogVideoX-5b \
---controlnet_path TheDenk/cogvideo-2b-controlnet-hed
+--controlnet_path TheDenk/cogvideox-5b-controlnet-hed-v1
 ```
 
 Additional options are available to specify the guidance scale, number of inference steps, video generation type, and output paths.
@@ -127,8 +127,8 @@ def generate_video(
     # We recommend using `CogVideoXDDIMScheduler` for CogVideoX-2B.
     # using `CogVideoXDPMScheduler` for CogVideoX-5B / CogVideoX-5B-I2V.
 
-    pipe.scheduler = CogVideoXDDIMScheduler.from_config(pipe.scheduler.config, timestep_spacing="trailing")
-    # pipe.scheduler = CogVideoXDPMScheduler.from_config(pipe.scheduler.config, timestep_spacing="trailing")
+    # pipe.scheduler = CogVideoXDDIMScheduler.from_config(pipe.scheduler.config, timestep_spacing="trailing")
+    pipe.scheduler = CogVideoXDPMScheduler.from_config(pipe.scheduler.config, timestep_spacing="trailing")
 
     # 3. Enable CPU offload for the model.
     # turn off if you have multiple GPUs or enough GPU memory(such as H100) and it will cost less time in inference
@@ -172,13 +172,13 @@ if __name__ == "__main__":
         help="The path of the video for controlnet processing.",
     )
     parser.add_argument(
-        "--base_model_path", type=str, default="THUDM/CogVideoX-2b", help="The path of the pre-trained model to be used"
+        "--base_model_path", type=str, default="THUDM/CogVideoX-5b", help="The path of the pre-trained model to be used"
     )
     parser.add_argument(
-        "--controlnet_model_path", type=str, default="TheDenk/cogvideo-2b-controlnet-hed", help="The path of the controlnet pre-trained model to be used"
+        "--controlnet_model_path", type=str, default="TheDenk/cogvideox-5b-controlnet-hed-v1", help="The path of the controlnet pre-trained model to be used"
     )
     parser.add_argument("--controlnet_type", type=str, default='hed', help="Type of controlnet model (e.g. canny, hed)")
-    parser.add_argument("--controlnet_weights", type=float, default=0.5, help="Strenght of controlnet")
+    parser.add_argument("--controlnet_weights", type=float, default=0.8, help="Strenght of controlnet")
     parser.add_argument("--controlnet_guidance_start", type=float, default=0.0, help="The stage when the controlnet starts to be applied")
     parser.add_argument("--controlnet_guidance_end", type=float, default=0.5, help="The stage when the controlnet end to be applied")
     parser.add_argument("--lora_path", type=str, default=None, help="The path of the LoRA weights to be used")
@@ -192,7 +192,7 @@ if __name__ == "__main__":
     )
     parser.add_argument("--num_videos_per_prompt", type=int, default=1, help="Number of videos to generate per prompt")
     parser.add_argument(
-        "--dtype", type=str, default="float16", help="The data type for computation (e.g., 'float16' or 'bfloat16')"
+        "--dtype", type=str, default="bfloat16", help="The data type for computation (e.g., 'float16' or 'bfloat16')"
     )
     parser.add_argument("--seed", type=int, default=42, help="The seed for reproducibility")
 

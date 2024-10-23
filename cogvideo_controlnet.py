@@ -47,6 +47,7 @@ class CogVideoXControlnet(ModelMixin, ConfigMixin, PeftAdapterMixin):
         temporal_interpolation_scale: float = 1.0,
         use_rotary_positional_embeddings: bool = False,
         use_learned_positional_embeddings: bool = False,
+        out_proj_dim = None,
     ):
         super().__init__()
         inner_dim = num_attention_heads * attention_head_dim
@@ -114,6 +115,12 @@ class CogVideoXControlnet(ModelMixin, ConfigMixin, PeftAdapterMixin):
             ]
         )
 
+        self.out_projectors = None
+        if out_proj_dim is not None:
+            self.out_projectors = nn.ModuleList(
+                [nn.Linear(inner_dim, out_proj_dim) for _ in range(num_layers)]
+            )
+            
         self.gradient_checkpointing = False
         
     def _set_gradient_checkpointing(self, module, value=False):
@@ -205,7 +212,11 @@ class CogVideoXControlnet(ModelMixin, ConfigMixin, PeftAdapterMixin):
                     temb=emb,
                     image_rotary_emb=image_rotary_emb,
                 )
-            controlnet_hidden_states += (hidden_states,)
+                
+            if self.out_projectors is not None:
+                controlnet_hidden_states += (self.out_projectors[i](hidden_states),)
+            else:
+                controlnet_hidden_states += (hidden_states,)
             
         if not return_dict:
             return (controlnet_hidden_states,)

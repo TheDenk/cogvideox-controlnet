@@ -6,10 +6,15 @@ https://github.com/user-attachments/assets/34a3a015-bfd3-4f75-a6ba-e8be524916e2
 https://github.com/user-attachments/assets/596ca9ce-198c-476c-8ace-077c2a534ae4
 
 This repo contains the code for simple Controlnet module for CogvideoX model.  
+
+Supported models for 5B:
+- Hed (<a href="https://huggingface.co/TheDenk/cogvideox-5b-controlnet-hed-v1">HF Model Link</a>)  
+
+  
 Supported models for 2B:
 - Canny (<a href="https://huggingface.co/TheDenk/cogvideox-2b-controlnet-canny-v1">HF Model Link</a>) 
 - Hed (<a href="https://huggingface.co/TheDenk/cogvideox-2b-controlnet-hed-v1">HF Model Link</a>) 
-
+  
 ### How to
 Clone repo 
 ```bash
@@ -33,33 +38,33 @@ pip install -r requirements.txt
 ```bash
 python -m inference.cli_demo \
     --video_path "resources/car.mp4" \
-    --prompt "car is moving among mountains" \
-    --controlnet_type "canny" \
-    --base_model_path THUDM/CogVideoX-2b \
-    --controlnet_model_path TheDenk/cogvideox-2b-controlnet-canny-v1
+    --prompt "The camera follows behind red car. Car is surrounded by a panoramic view of the vast, azure ocean. Seagulls soar overhead, and in the distance, a lighthouse stands sentinel, its beam cutting through the twilight. The scene captures a perfect blend of adventure and serenity, with the car symbolizing freedom on the open sea." \
+    --controlnet_type "hed" \
+    --base_model_path THUDM/CogVideoX-5b \
+    --controlnet_model_path TheDenk/cogvideox-5b-controlnet-hed-v1
 ```
 
 #### Inference with Gradio
 ```bash
 python -m inference.gradio_web_demo \
-    --controlnet_type "canny" \
-    --base_model_path THUDM/CogVideoX-2b \
-    --controlnet_model_path TheDenk/cogvideox-2b-controlnet-canny-v1
+    --controlnet_type "hed" \
+    --base_model_path THUDM/CogVideoX-5b \
+    --controlnet_model_path TheDenk/cogvideox-5b-controlnet-hed-v1
 ```
 
 ### Detailed inference
 ```bash
-python -m inference.cli_demo \
+CUDA_VISIBLE_DEVICES=0 python -m inference.cli_demo \
     --video_path "resources/car.mp4" \
-    --prompt "car is moving on waves in the ocean" \
-    --controlnet_type "canny" \
-    --base_model_path THUDM/CogVideoX-2b \
-    --controlnet_model_path TheDenk/cogvideox-2b-controlnet-canny-v1 \
+    --prompt "The camera follows behind red car. Car is surrounded by a panoramic view of the vast, azure ocean. Seagulls soar overhead, and in the distance, a lighthouse stands sentinel, its beam cutting through the twilight. The scene captures a perfect blend of adventure and serenity, with the car symbolizing freedom on the open sea." \
+    --controlnet_type "hed" \
+    --base_model_path THUDM/CogVideoX-5b \
+    --controlnet_model_path TheDenk/cogvideox-5b-controlnet-hed-v1 \
     --num_inference_steps 50 \
     --guidance_scale 6.0 \
-    --controlnet_weights 0.8 \
+    --controlnet_weights 1.0 \
     --controlnet_guidance_start 0.0 \
-    --controlnet_guidance_end 0.8 \
+    --controlnet_guidance_end 0.5 \
     --output_path "./output.mp4" \
     --seed 42
 ```
