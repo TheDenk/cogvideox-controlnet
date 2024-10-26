@@ -5,6 +5,7 @@ https://github.com/user-attachments/assets/d3cd3cc4-de95-453f-bbf7-ccbe1711fc3c
 This repo contains the code for simple Controlnet module for CogvideoX model.  
 
 Supported models for 5B:
+- Canny (<a href="https://huggingface.co/TheDenk/cogvideox-5b-controlnet-canny-v1">HF Model Link</a>) 
 - Hed (<a href="https://huggingface.co/TheDenk/cogvideox-5b-controlnet-hed-v1">HF Model Link</a>)  
 
   
@@ -36,17 +37,17 @@ pip install -r requirements.txt
 python -m inference.cli_demo \
     --video_path "resources/car.mp4" \
     --prompt "The camera follows behind red car. Car is surrounded by a panoramic view of the vast, azure ocean. Seagulls soar overhead, and in the distance, a lighthouse stands sentinel, its beam cutting through the twilight. The scene captures a perfect blend of adventure and serenity, with the car symbolizing freedom on the open sea." \
-    --controlnet_type "hed" \
+    --controlnet_type "canny" \
     --base_model_path THUDM/CogVideoX-5b \
-    --controlnet_model_path TheDenk/cogvideox-5b-controlnet-hed-v1
+    --controlnet_model_path TheDenk/cogvideox-5b-controlnet-canny-v1
 ```
 
 #### Inference with Gradio
 ```bash
 python -m inference.gradio_web_demo \
-    --controlnet_type "hed" \
+    --controlnet_type "canny" \
     --base_model_path THUDM/CogVideoX-5b \
-    --controlnet_model_path TheDenk/cogvideox-5b-controlnet-hed-v1
+    --controlnet_model_path TheDenk/cogvideox-5b-controlnet-canny-v1
 ```
 
 ### Detailed inference
@@ -54,9 +55,9 @@ python -m inference.gradio_web_demo \
 CUDA_VISIBLE_DEVICES=0 python -m inference.cli_demo \
     --video_path "resources/car.mp4" \
     --prompt "The camera follows behind red car. Car is surrounded by a panoramic view of the vast, azure ocean. Seagulls soar overhead, and in the distance, a lighthouse stands sentinel, its beam cutting through the twilight. The scene captures a perfect blend of adventure and serenity, with the car symbolizing freedom on the open sea." \
-    --controlnet_type "hed" \
+    --controlnet_type "canny" \
     --base_model_path THUDM/CogVideoX-5b \
-    --controlnet_model_path TheDenk/cogvideox-5b-controlnet-hed-v1 \
+    --controlnet_model_path TheDenk/cogvideox-5b-controlnet-canny-v1 \
     --num_inference_steps 50 \
     --guidance_scale 6.0 \
     --controlnet_weights 1.0 \
