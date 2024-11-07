@@ -3,7 +3,12 @@
 https://github.com/user-attachments/assets/d3cd3cc4-de95-453f-bbf7-ccbe1711fc3c
 
 This repo contains the code for simple Controlnet module for CogvideoX model.  
-
+### ComfyUI
+<a href="https://github.com/kijai/ComfyUI-CogVideoXWrapper">ComfyUI-CogVideoXWrapper
+</a> supports controlnet pipeline. See an <a href="https://github.com/kijai/ComfyUI-CogVideoXWrapper/blob/main/examples/cogvideox_2b_controlnet_example_01.json">example
+</a> file.  
+  
+### Models  
 Supported models for 5B:
 - Canny (<a href="https://huggingface.co/TheDenk/cogvideox-5b-controlnet-canny-v1">HF Model Link</a>) 
 - Hed (<a href="https://huggingface.co/TheDenk/cogvideox-5b-controlnet-hed-v1">HF Model Link</a>)  
