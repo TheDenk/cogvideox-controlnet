@@ -606,7 +606,7 @@ class ControlnetCogVideoXPipeline(DiffusionPipeline, CogVideoXLoraLoaderMixin):
                 prompt_embeds = prompt_embeds.to(dtype=self.transformer.dtype)
                 
                 controlnet_states = None
-                if (controlnet_guidance_start < current_sampling_percent < controlnet_guidance_end):
+                if (controlnet_guidance_start <= current_sampling_percent <= controlnet_guidance_end):
                     # extract controlnet hidden state
                     controlnet_states = self.controlnet(
                         hidden_states=latent_model_input,
